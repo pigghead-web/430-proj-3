@@ -9,8 +9,8 @@ const router = (app) => {
   app.get('/', mid.requiresLogout, controller.Account.loginPage);
 
   // **TESTING REGISTER FUNCTION
-  app.get('/register', controller.Account.loginPage);
-  app.post('/register', controller.Account.register);
+//  app.get('/register', controller.Account.loginPage);
+//  app.post('/register', controller.Account.register);
 
   // Login
   app.get('/login', mid.requiresLogout, controller.Account.loginPage);
