@@ -1,0 +1,59 @@
+{
+  "name": "430-proj-2",
+  "version": "1.0.0",
+  "description": "PROJECT 2 ",
+  "engines": {
+    "node": "10.16.3"
+  },
+  "main": "./server/app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-redis": "^4.0.3",
+    "cookie-parser": "^1.4.4",
+    "csurf": "^1.10.0",
+    "ejsx": "^1.0.0-b2",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "favicon": "0.0.2",
+    "helmet": "^3.21.2",
+    "mongoose": "^5.7.8",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "serve-favicon": "^2.5.0",
+    "underscore": "^1.9.1",
+    "yarn": "^1.19.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-react": "^7.16.0",
+    "nodemon": "^1.19.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1"
+  },
+  "scripts": {
+    "pretest": "eslint ./server --fix",
+    "test": "echo \"Tests Complete\"",
+    "start": "node ./server/app.js",
+    "watchLoginBundle": "babel --watch ./client/login ./client/helper --presets @babel/react --out-file ./hosted/loginBundle.js",
+    "watchGameBundle": "babel --watch ./client/app ./client/helper --presets @babel/react --out-file ./hosted/gameBundle.js",
+    "nodemon": "nodemon -e js,html,handlebars,css --watch ./hosted --watch ./server ./server/app.js",
+    "buildLoginBundle": "babel ./client/login ./client/helper --presets @babel/react --out-file ./hosted/loginBundle.js",
+    "buildGameBundle": "babel ./client/app ./client/helper --presets @babel/react --out-fil ./hosted/gameBundle.js"
+  },
+  "repository": "git+https://github.com/pigghead-web/430-proj-2.git",
+  "author": "JUSTIN ARMSTRONG",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/pigghead-web/430-proj-2/issues"
+  },
+  "homepage": "https://github.com/pigghead-web/430-proj-2#readme"
+}
