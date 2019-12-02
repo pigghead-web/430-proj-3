@@ -2,7 +2,7 @@
 // Encapsulate secure credentials
 const crypto = require('crypto');
 const mongoose = require('mongoose');
-const passport = require('passport-local-mongoose');
+// const passport = require('passport-local-mongoose');
 
 mongoose.Promise = global.Promise;
 
@@ -38,7 +38,7 @@ const AccountSchema = new mongoose.Schema({
 });
 
 // passport -> need to add as a 'plugin'
-//AccountSchema.plugin(passport);
+// AccountSchema.plugin(passport);
 
 // - STATICS / FUNCTIONS -
 AccountSchema.statics.toAPI = (doc) => ({
@@ -75,15 +75,15 @@ AccountSchema.statics.generateHash = (password, callback) => {
   crypto.pbkdf2(password, salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => callback(salt, hash.toString('hex')));
 };
 
-//AccountSchema.statics.changePassword = ()
+// AccountSchema.statics.changePassword = ()
 
-/*AccountSchema.statics.changePassword = (username, password, newPassword, callback) => {
+/* AccountSchema.statics.changePassword = (username, password, newPassword, callback) => {
   /**
   const filter = doc._id;  // criteria used to look for the object we want to update
   const update;  // what we will be updating
-  **/
-  
-  /*return AccountModel.findOneAndUpdate({ p: newPassword }, { new: true }, (err) => {
+  * */
+
+/* return AccountModel.findOneAndUpdate({ p: newPassword }, { new: true }, (err) => {
     if (err) {
       console.log('ERROR::FAILED_TO_UPDATE');
       console.log(err);
@@ -97,27 +97,27 @@ AccountSchema.statics.generateHash = (password, callback) => {
       console.log("ERROR::NEW_PASSWORD_MISSING");
       return callback(err);
     }
-    
+
     if (!doc) {
       console.log("ERROR::DOC_MISSING");
       return callback();
     }
-    
+
     return validatePassword(doc, password, (result) => {
       if (result === true) {
         return callback(null, doc);
       }
-      
+
       return callback();
     });
   });
 
   var self = this;
-  
+
   //crypto.randomBytes()
   //return console.log("SUCCESS::END_OF_CHANGEPASSWORD");
-  
-};*/
+
+}; */
 
 // u = username
 // p = password

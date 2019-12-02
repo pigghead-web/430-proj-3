@@ -23,7 +23,10 @@
     "react-dom": "^16.11.0",
     "serve-favicon": "^2.5.0",
     "underscore": "^1.9.1",
-    "yarn": "^1.19.1"
+    "yarn": "^1.19.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
@@ -34,10 +37,7 @@
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.16.0",
-    "nodemon": "^1.19.4",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.1"
+    "nodemon": "^1.19.4"
   },
   "scripts": {
     "pretest": "eslint ./server --fix",

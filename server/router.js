@@ -11,7 +11,7 @@ const router = (app) => {
   // **TESTING REGISTER FUNCTION
   app.get('/register', controller.Account.loginPage);
   app.post('/register', controller.Account.register);
-  
+
   // Login
   app.get('/login', mid.requiresLogout, controller.Account.loginPage);
   app.post('/login', mid.requiresLogout, controller.Account.login);
@@ -27,7 +27,7 @@ const router = (app) => {
 
   // Logout
   app.get('/logout', controller.Account.logout);
-  
+
   // Reset password
   app.post('/resetPassword', controller.Account.changePassword);
 

@@ -96,68 +96,71 @@ const signup = (req, res) => {
   });
 };
 
-const register = (req, res) => {
-  UserSchema.register(new UserSchema(
-    { username: req.body.user }), 
-    req.body.pass, (err, account) => {
-      if (err) {
-        return response.status(400).json({ error: 'Error occured' });
-      }
-    
-    passport.authenticate('local')(req, res, () => {
-      res.redirect('/');
-    })
-  })
-}
+// const register = (req, res) => {
+//  UserSchema.register(new UserSchema(
+//    { username: req.body.user },
+//  ),
+//  req.body.pass, (err, account) => {
+//    if (err) {
+//      return response.status(400).json({ error: 'Error occured' });
+//    }
+//
+//    passport.authenticate('local')(req, res, () => {
+//      res.redirect('/');
+//    });
+//  });
+// };
 
 // Using passport-local-mongoose
-//const register = (req, res) => {
+// const register = (req, res) => {
 //  acc = new AccountModel({ username: req.body.username, createdDate: Date.now });
-//  
+//
 //  Acc.register(acc, req.body.password, (err, user) => {
 //    if (err) {
 //      return response.status(400).json({ error: "Account could not be registered" });
 //    }
-//    
+//
 //    return res.json({ redirect: '/game' });
 //  });
-//};
+// };
 
 const changePassword = (req, res) => {
   const request = req;
   const response = res;
-  
-  //console.log("changePassword::REQUEST::", request.body);
-  
-  //const username = `${request.response.user}`;
+
+  // console.log("changePassword::REQUEST::", request.body);
+
+  // const username = `${request.response.user}`;
   const oldPass = `${request.body.oldPass}`;
   const newPass = `${request.body.newPass}`;
   const newPass2 = `${request.body.newPass2}`;
-  
+
   // Check all fields
   if (!oldPass || !newPass || !newPass2) {
-    return response.status(400).json({ error: "All fields are required" });
+    return response.status(400).json({ error: 'All fields are required' });
   }
-  
+
   // Check that values match
-  if (newPass != newPass2) {
-    return response.status(400).json({ error: "New passwords do not match" });
+  if (newPass !== newPass2) {
+    return response.status(400).json({ error: 'New passwords do not match' });
   }
-  
+
   // Authenticate that our old pass works
-  console.log("Change Password (MOTIONS) successful");
+  console.log('Change Password (MOTIONS) successful');
   // If it does not work, send back an error message
   // otherwise, update the password
   console.log(request.body);
-  //var id = request.body._id
-  
+  // var id = request.body._id
+
   return Account.AccountModel.changePassword(newPass, (err) => {
     if (err) {
-      console.log("error::unknown_error");
+      console.log('error::unknown_error');
       return console.log(err);
     }
+
+    return console.log('changePassword::Completion');
   });
-}
+};
 
 const getToken = (req, res) => {
   const request = req;
@@ -176,6 +179,6 @@ module.exports.constructionPage = constructionPage;
 module.exports.logout = logout;
 module.exports.login = login;
 module.exports.signup = signup;
-module.exports.register = register;
+// module.exports.register = register;
 module.exports.changePassword = changePassword;
 module.exports.getToken = getToken;

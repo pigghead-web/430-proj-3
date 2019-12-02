@@ -1,7 +1,7 @@
 // - FUNCTIONS -
 // If we aren't logged in, navigate to the default/ main page
 const requiresLogin = (req, res, next) => {
-  console.log("requires login triggered");
+  console.log('requires login triggered');
   if (!req.session.account) {
     return res.redirect('/');
   }
@@ -20,7 +20,7 @@ const requiresLogout = (req, res, next) => {
 };
 
 const requiresSecure = (req, res, next) => {
-  if (req.headers['x-forwarded-proto'] != 'https') {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
     return res.redirect(`https://${req.hostname}${req.url}`);
   }
 

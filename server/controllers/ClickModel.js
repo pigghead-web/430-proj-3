@@ -27,15 +27,19 @@ const gamePage = (req, res) => {
   click.ClickModel.findByOwner = (req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
-      return res.status(400).json({ error: "An error occurred" });
+      return res.status(400).json({ error: 'An error occurred' });
     }
-    
+
+    if (!docs) {
+      return res.status(400).json({ error: 'Docs missing' });
+    }
+
     return res.render('game', {
       csrfToken: req.csrfToken(),
-      user: username,
+      // user: username,
     });
   });
-}
+};
 
 // - FUNCTIONS -
 // const purchaseAutoclick = (req, res) => {
