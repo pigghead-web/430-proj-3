@@ -75,13 +75,21 @@ AccountSchema.statics.generateHash = (password, callback) => {
   crypto.pbkdf2(password, salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => callback(salt, hash.toString('hex')));
 };
 
+AccountSchema.statics.updatePassword = (username, newPassword, salt, callback) => {
+  const filter = {
+    username: username,
+  }
+  //console.log("updatePassword::Supposed_Success?");
+  return AccountModel.findOneAndUpdate(filter, {password: newPassword, salt}, callback);
+}
+
 // AccountSchema.statics.changePassword = ()
 
 /* AccountSchema.statics.changePassword = (username, password, newPassword, callback) => {
   /**
   const filter = doc._id;  // criteria used to look for the object we want to update
   const update;  // what we will be updating
-  * */
+  **/
 
 /* return AccountModel.findOneAndUpdate({ p: newPassword }, { new: true }, (err) => {
     if (err) {

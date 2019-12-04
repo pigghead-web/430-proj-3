@@ -101,9 +101,6 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Initialize the passport from UserSchema
-
-
 // Add csrf middleware layer
 // * Must come after cookieParser
 app.use(csrf());
