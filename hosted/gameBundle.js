@@ -1,67 +1,22 @@
 "use strict";
 
-// - VARIABLES & CONSTANTS -
-//var speed = 1000;  // how fast the game will go
-//
-//// An object to store the elapsed time
-//var gameTimeData = {
-//  hour: 1,
-//  day: 1,
-//  month: 1,
-//  year: 1
-//}
-//
-//var gameTimer = setInterval(function() {
-//  addHour();
-//}, speed);
-//
-//const addHour = () => {
-//  if (hour !== 24) {
-//    gameTimeData.hour++;
-//  } else {
-//    gameTimeData.hour = 1;
-//    addDay();
-//  }
-//  console.log("Hour is now: " + gameTimeData.hour);
-//}
-//
-//const addDay = () => {
-//  if(!monthEnd()) {
-//    gameTimeData.day++;
-//  } else {
-//    gameTimeData.day = 1;
-//    addMonth();
-//  }
-//  console.log("Day is now: " + gameTimeData.day);
-//}
-//
-//const monthEnd = () => {
-//  var endofMonth = false;
-//  
-//  switch (true) {
-//      case(gameTimeData.month === 1)
-//  }
-//}
-//
-//const addMonth = () => {
-//  
-//}
 var clicks = 0; // Total number of clicks; what will function as 'score'
 
 var autoClicks = 0; // Automatically click this amount of times/second
 
 var clickRate = 1000; // Time between auto clicks
 // update clicks to the
-
-var updateTotalClicks = function updateTotalClicks() {
-  document.getElementById("totalClicks").innerHTML = clicks;
-}; // - HANDLE FUNCTIONS -
+//const updateTotalClicks = () => {
+//  clicks++;
+//  document.getElementById("totalClicks").innerHTML = clicks;
+//  console.log("Update::Total_Clicks");
+//}
+// - HANDLE FUNCTIONS -
 
 /**
   All of these functions handle screen switching.
 **/
 // When our player actually clicks on the reset button, do this
-
 
 var handleReset = function handleReset(e) {
   // prevent refresh
@@ -106,13 +61,20 @@ var gamePage = function gamePage(res, req) {
 
 
 var GameWindow = function GameWindow(props) {
+  var updateTotalClicks = function updateTotalClicks(e) {
+    clicks++;
+    document.getElementById('totalClicks').innerHTML = clicks;
+    console.log("Update::Total_Clicks:", clicks);
+  };
+
   return (// JSX return
     React.createElement("div", {
       id: "gameAreaWrapper"
     }, React.createElement("h2", {
       id: "totalClicks",
       className: "totalClicks"
-    }, "0"), React.createElement("button", {
+    }, clicks), React.createElement("button", {
+      onClick: updateTotalClicks,
       id: "clickForScore",
       className: "btn btn-default"
     }, "click"), React.createElement("input", {
@@ -125,7 +87,7 @@ var GameWindow = function GameWindow(props) {
 
 
 var AccountWindow = function AccountWindow(props) {
-  return (// We need a form for the reset. Include: Old password (to preven account stealing),
+  return (// We need a form for the reset. Include: Old password (to prevent account stealing),
     // New password (entered twice)
     React.createElement("form", {
       id: "resetForm",

@@ -72,6 +72,7 @@ const signup = (req, res) => {
       username: request.body.username,
       salt,
       password: hash,
+      score: 0
     };
 
     const newAccount = new Account.AccountModel(accountData);

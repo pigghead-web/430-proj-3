@@ -35,6 +35,13 @@ const AccountSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // Default value of SchemaType
   },
+  
+  score: {
+    type: Number,
+    required: true,
+    min: 0,
+    default: 0
+  }
 });
 
 // passport -> need to add as a 'plugin'

@@ -1,57 +1,13 @@
-// - VARIABLES & CONSTANTS -
-//var speed = 1000;  // how fast the game will go
-//
-//// An object to store the elapsed time
-//var gameTimeData = {
-//  hour: 1,
-//  day: 1,
-//  month: 1,
-//  year: 1
-//}
-//
-//var gameTimer = setInterval(function() {
-//  addHour();
-//}, speed);
-//
-//const addHour = () => {
-//  if (hour !== 24) {
-//    gameTimeData.hour++;
-//  } else {
-//    gameTimeData.hour = 1;
-//    addDay();
-//  }
-//  console.log("Hour is now: " + gameTimeData.hour);
-//}
-//
-//const addDay = () => {
-//  if(!monthEnd()) {
-//    gameTimeData.day++;
-//  } else {
-//    gameTimeData.day = 1;
-//    addMonth();
-//  }
-//  console.log("Day is now: " + gameTimeData.day);
-//}
-//
-//const monthEnd = () => {
-//  var endofMonth = false;
-//  
-//  switch (true) {
-//      case(gameTimeData.month === 1)
-//  }
-//}
-//
-//const addMonth = () => {
-//  
-//}
 var clicks = 0;  // Total number of clicks; what will function as 'score'
 var autoClicks = 0;  // Automatically click this amount of times/second
 var clickRate = 1000;  // Time between auto clicks
 
 // update clicks to the
-const updateTotalClicks = () => {
-  document.getElementById("totalClicks").innerHTML = clicks;
-}
+//const updateTotalClicks = () => {
+//  clicks++;
+//  document.getElementById("totalClicks").innerHTML = clicks;
+//  console.log("Update::Total_Clicks");
+//}
 
 // - HANDLE FUNCTIONS -
 /**
@@ -100,10 +56,16 @@ const gamePage = (res, req) => {
 
 // Main Game Screen
 const GameWindow = (props) => {
+  const updateTotalClicks = (e) => {
+    clicks++;
+    document.getElementById('totalClicks').innerHTML = clicks;
+    console.log("Update::Total_Clicks:", clicks);
+  }
+  
   return (  // JSX return
     <div id="gameAreaWrapper">
-      <h2 id="totalClicks" className="totalClicks">0</h2>
-      <button id="clickForScore" className="btn btn-default">click</button>
+      <h2 id="totalClicks" className="totalClicks">{clicks}</h2>
+      <button onClick={updateTotalClicks} id="clickForScore" className="btn btn-default">click</button>
       <input type="hidden" name="_csrf" value={props.csrf}/>
     </div>
   );
@@ -112,7 +74,7 @@ const GameWindow = (props) => {
 // Reset Password Screen
 const AccountWindow = (props) => {
   return (
-    // We need a form for the reset. Include: Old password (to preven account stealing),
+    // We need a form for the reset. Include: Old password (to prevent account stealing),
     // New password (entered twice)
     <form id="resetForm" name="resetForm"
           onSubmit={handleReset}

@@ -24,6 +24,9 @@ const router = (app) => {
   app.get('/game', mid.requiresLogin, (req, res) => {
     res.render('./game.handlebars');
   });
+  
+  // Leaderboard
+  //app.get('/leaderboard', controller.Account.leaderboardPage)
 
   // Logout
   app.get('/logout', controller.Account.logout);
