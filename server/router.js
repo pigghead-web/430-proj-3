@@ -9,8 +9,8 @@ const router = (app) => {
   app.get('/', mid.requiresLogout, controller.Account.loginPage);
 
   // **TESTING REGISTER FUNCTION
-//  app.get('/register', controller.Account.loginPage);
-//  app.post('/register', controller.Account.register);
+  //  app.get('/register', controller.Account.loginPage);
+  //  app.post('/register', controller.Account.register);
 
   // Login
   app.get('/login', mid.requiresLogout, controller.Account.loginPage);
@@ -24,9 +24,9 @@ const router = (app) => {
   app.get('/game', mid.requiresLogin, (req, res) => {
     res.render('./game.handlebars');
   });
-  
+
   // Leaderboard
-  //app.get('/leaderboard', controller.Account.leaderboardPage)
+  // app.get('/leaderboard', controller.Account.leaderboardPage)
 
   // Logout
   app.get('/logout', controller.Account.logout);

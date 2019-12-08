@@ -112,29 +112,35 @@ input#newPass, input#newPass2 {
   border: 0;
   border-bottom: 1px solid #3A405A;
   font-family: 'Comfortaa', cursive;
-  margin: 12px 12px 12px 12px;
+  margin: 12px;
   padding: 5px;
   width: 25%;
   transition: background-color 0.1s ease
 }
 
+/*
 input#user:hover, input#pass:hover, #pass2:hover,
 #oldPass:hover, #newPass:hover, #newPass2:hover {
   background-color: #f1f1f1;
 }
+*/
 
+/*
 input#user:focus, input#pass:focus, input#pass2:focus,
 #oldPass:focus, #newPass:hover, #newPass2:hover {
   background: #f1f1f1;
   outline: none;
 }
+*/
 
 input#loginFormSubmit, input#signupFormSubmit, input#resetFormSubmit {
   -webkit-appearance: none;
   border: 0;
   padding: 5px;
   font-family: 'Comfortaa', cursive;
+  margin: 12px;
   transition: background-color 0.3s ease;
+  width: 25%;
 }
 
 input#resetFormSubmit {

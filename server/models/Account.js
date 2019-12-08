@@ -35,13 +35,13 @@ const AccountSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // Default value of SchemaType
   },
-  
+
   score: {
     type: Number,
     required: true,
     min: 0,
-    default: 0
-  }
+    default: 0,
+  },
 });
 
 // passport -> need to add as a 'plugin'
@@ -84,11 +84,11 @@ AccountSchema.statics.generateHash = (password, callback) => {
 
 AccountSchema.statics.updatePassword = (username, newPassword, salt, callback) => {
   const filter = {
-    username: username,
-  }
-  //console.log("updatePassword::Supposed_Success?");
-  return AccountModel.findOneAndUpdate(filter, {password: newPassword, salt}, callback);
-}
+    username,
+  };
+  // console.log("updatePassword::Supposed_Success?");
+  return AccountModel.findOneAndUpdate(filter, { password: newPassword, salt }, callback);
+};
 
 // AccountSchema.statics.changePassword = ()
 
@@ -96,7 +96,7 @@ AccountSchema.statics.updatePassword = (username, newPassword, salt, callback) =
   /**
   const filter = doc._id;  // criteria used to look for the object we want to update
   const update;  // what we will be updating
-  **/
+  * */
 
 /* return AccountModel.findOneAndUpdate({ p: newPassword }, { new: true }, (err) => {
     if (err) {

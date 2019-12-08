@@ -72,7 +72,7 @@ const signup = (req, res) => {
       username: request.body.username,
       salt,
       password: hash,
-      score: 0
+      score: 0,
     };
 
     const newAccount = new Account.AccountModel(accountData);
@@ -129,7 +129,7 @@ const changePassword = (req, res) => {
   const request = req;
   const response = res;
 
-  //console.log("changePassword::REQUEST::", request.session);
+  // console.log("changePassword::REQUEST::", request.session);
 
   const username = `${request.session.account.username}`;
   const oldPass = `${request.body.oldPass}`;
@@ -145,24 +145,24 @@ const changePassword = (req, res) => {
   if (newPass !== newPass2) {
     return response.status(400).json({ error: 'New passwords do not match' });
   }
-  
+
   // Authenticate will return an account
   return Account.AccountModel.authenticate(username, oldPass, (err, account) => {
     if (err || !account) {
-      return response.status(401).json ({ error: "Incorrect old password" });
+      return response.status(401).json({ error: 'Incorrect old password' });
     }
-    
-    return Account.AccountModel.generateHash(newPass, (salt, hash) => {
-      Account.AccountModel.updatePassword(username, hash, salt, (err) => {
-        if (err) {
-          return response.status(400).json({ error: "An unknown error occured" });
-        }
-      })
-      return res.json({ redirect: '/game' });
-    })
-  })
 
-  /*// Authenticate that our old pass works
+    return Account.AccountModel.generateHash(newPass, (salt, hash) => {
+      Account.AccountModel.updatePassword(username, hash, salt, (err2) => {
+        if (err2) {
+          return response.status(400).json({ error: 'An unknown error occured' });
+        }
+        return res.json({ redirect: '/game' });
+      });
+    });
+  });
+
+  /* // Authenticate that our old pass works
   console.log('Change Password (MOTIONS) successful');
   // If it does not work, send back an error message
   // otherwise, update the password
@@ -176,7 +176,7 @@ const changePassword = (req, res) => {
     }
 
     return console.log('changePassword::Completion');
-  });*/
+  }); */
 };
 
 const getToken = (req, res) => {
