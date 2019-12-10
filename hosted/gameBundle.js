@@ -5,12 +5,6 @@ var clicks = 0; // Total number of clicks; what will function as 'score'
 var autoClicks = 0; // Automatically click this amount of times/second
 
 var clickRate = 1000; // Time between auto clicks
-// update clicks to the
-//const updateTotalClicks = () => {
-//  clicks++;
-//  document.getElementById("totalClicks").innerHTML = clicks;
-//  console.log("Update::Total_Clicks");
-//}
 // - HANDLE FUNCTIONS -
 
 /**
@@ -33,9 +27,43 @@ var handleReset = function handleReset(e) {
     return false;
   }
 
+  console.log($('#resetForm').serialize());
   sendAjax('POST', $('#resetForm').attr('action'), $('#resetForm').serialize(), redirect);
   return false;
-}; // Make the game page and retrieve the ClickModel associated with each player
+};
+
+var handlePurchase = function handlePurchase(e) {
+  var tier = e.target.id; //console.log(e.target.value);
+
+  var data = {
+    clicks: 0,
+    price: 0,
+    _csrf: e.target.value
+  };
+
+  if (tier == 't1') {
+    // tier 1
+    data.clicks = 100;
+    data.price = 4.99;
+  } else if (tier == 't2') {
+    // tier 2
+    data.clicks = 200;
+    data.price = 8.99;
+  } else {
+    console.log("tier not recognized");
+  }
+
+  console.log(JSON.stringify(data));
+  sendAjax('POST', '/purchaseClicks', JSON.stringify(data), redirect);
+  return false;
+}; //const t1Purchase = (e) => {
+//  sendAjax('POST', '/t1purchase', { clicks: 100, price: 4.99 }, redirect);
+//}
+//
+//const t2Purchase = (e) => {
+//  sendAjax('POST', '/t2purchase', { clicks: 200, price: 8.99 }, redirect);
+//}
+// Make the game page and retrieve the ClickModel associated with each player
 
 
 var gamePage = function gamePage(res, req) {
@@ -63,8 +91,6 @@ var gamePage = function gamePage(res, req) {
 var GameWindow = function GameWindow(props) {
   var updateTotalClicks = function updateTotalClicks(e) {
     clicks++;
-    document.getElementById('totalClicks').innerHTML = clicks;
-    console.log("Update::Total_Clicks:", clicks);
   };
 
   return (// JSX return
@@ -73,7 +99,7 @@ var GameWindow = function GameWindow(props) {
     }, React.createElement("h2", {
       id: "totalClicks",
       className: "totalClicks"
-    }, clicks), React.createElement("button", {
+    }, "Total Clicks:", props.clicks), React.createElement("button", {
       onClick: updateTotalClicks,
       id: "clickForScore",
       className: "btn btn-default"
@@ -138,6 +164,18 @@ var LeaderboardWindow = function LeaderboardWindow(props) {
       "class": "tg-a79m"
     }, "example score")))
   );
+};
+
+var StoreWindow = function StoreWindow(props) {
+  return React.createElement("table", null, React.createElement("tr", null, React.createElement("button", {
+    id: "t1",
+    onClick: handlePurchase,
+    value: props.csrf
+  }, "100 clicks / $4.99")), React.createElement("tr", null, React.createElement("button", {
+    id: "t2",
+    onClick: handlePurchase,
+    value: props.csrf
+  }, "200 clicks / $4.99")));
 }; // - SETUP -
 
 
@@ -159,10 +197,17 @@ var createLeaderboardWindow = function createLeaderboardWindow(csrf) {
   }), document.querySelector('#content'));
 };
 
+var createStoreWindow = function createStoreWindow(csrf) {
+  ReactDOM.render(React.createElement(StoreWindow, {
+    csrf: csrf
+  }), document.querySelector('#content'));
+};
+
 var setup = function setup(csrf) {
   var gameButton = document.querySelector('#gameButton');
   var leaderboardButton = document.querySelector('#leaderboardButton');
   var accountButton = document.querySelector('#accountButton');
+  var storeButton = document.querySelector('#storeButton');
   gameButton.addEventListener('click', function (e) {
     e.preventDefault();
     createGameWindow(csrf);
@@ -176,6 +221,11 @@ var setup = function setup(csrf) {
   accountButton.addEventListener('click', function (e) {
     e.preventDefault();
     createAccountWindow(csrf);
+    return false;
+  });
+  storeButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    createStoreWindow(csrf);
     return false;
   });
   createGameWindow(csrf);
@@ -205,6 +255,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
     url: action,
     data: data,
     dataType: "json",
+    contentType: "application/json",
     success: success,
     error: function error(xhr, status, _error) {
       console.log(xhr.responseText);

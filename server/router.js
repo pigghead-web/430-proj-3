@@ -34,6 +34,9 @@ const router = (app) => {
   // Reset password
   app.post('/resetPassword', controller.Account.changePassword);
 
+  // Access the store page
+  app.post('/purchaseClicks', controller.Account.addFunds);
+
   // Construction
   // This will be a temporary path to reflect that this is still under construction
   app.get('/construction', controller.Account.constructionPage);

@@ -14,9 +14,10 @@
 <body>
   <div class="grid-container">
     <div class="Navigation">
-     <div class="nav-menu"><a href="" id="gameButton">game</a></div>
+      <div class="nav-menu"><a href="" id="gameButton">game</a></div>
       <div class="nav-menu"><a id="leaderboardButton" href="/leaderboard">leaderboard</a></div>
       <div class="nav-menu"><a href="/account" id="accountButton">account</a></div>
+      <div class="nav-menu"><a href="/store" id="storeButton">store</a></div>
       <div class="nav-menu"><a href="/logout" id="signoutButton">signout</a></div>
     </div>
     
@@ -24,13 +25,7 @@
     </div>
     
     <div class="mainContent">
-      <section id="content">
-        <div id="gameAreaWrapper">
-        <h2 id="totalClicks" className="totalClicks">total clicks: {{ totalClicks }}</h2>
-        <button id="clickForScore" className="btn btn-default">click</button>
-        <input type="hidden" name="_csrf" value={props.csrf}/>
-      </div>
-      </section>
+      <section id="content"></section>
     </div>
     <div class="sideContent">Side Content</div>
     <div class="Ad">AD GOES HERE</div>

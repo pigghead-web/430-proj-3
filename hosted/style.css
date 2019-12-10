@@ -35,6 +35,17 @@ html, body {
   min-height: 100vh;
 }
 
+.login-grid-container {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 0fr;
+  grid-template-rows: 0.11fr 1fr 1fr 0.3fr;
+  grid-template-areas: "Navigation Navigation Navigation Navigation" 
+                       "mainContent mainContent mainContent sideContent" 
+                       "mainContent mainContent mainContent sideContent"
+                       "Ad Ad Ad sideContent";
+  min-height: 100vh;
+}
+
 .Navigation { 
   grid-area: Navigation;
   display: flex;
@@ -95,6 +106,13 @@ div.Navigation h3 {
   justify-content: center;
 }
 
+.show-notif {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
 /***************/
 /* INPUT FORMS */
 /***************/
@@ -102,6 +120,7 @@ form#signupForm, form#loginForm, form#resetForm {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+  margin: auto;
 }
 
 input#user, input#pass, input#pass2, input#oldPass,
@@ -112,7 +131,8 @@ input#newPass, input#newPass2 {
   border: 0;
   border-bottom: 1px solid #3A405A;
   font-family: 'Comfortaa', cursive;
-  margin: 12px;
+  margin: auto;
+  margin-top: 22px;
   padding: 5px;
   width: 25%;
   transition: background-color 0.1s ease
@@ -138,9 +158,10 @@ input#loginFormSubmit, input#signupFormSubmit, input#resetFormSubmit {
   border: 0;
   padding: 5px;
   font-family: 'Comfortaa', cursive;
-  margin: 12px;
+  margin: auto;
+  margin-top: 22px;
   transition: background-color 0.3s ease;
-  width: 25%;
+  width: 10%;
 }
 
 input#resetFormSubmit {
@@ -185,6 +206,10 @@ button#clickForScore:hover {
 
 button#clickForScore:focus {
   outline: none;
+}
+
+#totalClicks {
+  font-family: "Comfortaa", cursive;
 }
 
 

@@ -2,13 +2,6 @@ var clicks = 0;  // Total number of clicks; what will function as 'score'
 var autoClicks = 0;  // Automatically click this amount of times/second
 var clickRate = 1000;  // Time between auto clicks
 
-// update clicks to the
-//const updateTotalClicks = () => {
-//  clicks++;
-//  document.getElementById("totalClicks").innerHTML = clicks;
-//  console.log("Update::Total_Clicks");
-//}
-
 // - HANDLE FUNCTIONS -
 /**
   All of these functions handle screen switching.
@@ -31,10 +24,48 @@ const handleReset = (e) => {
     return false;
   }
   
+  console.log($('#resetForm').serialize());
+  
   sendAjax('POST', $('#resetForm').attr('action'), $('#resetForm').serialize(), redirect);
   
   return false;
 }
+
+const handlePurchase = (e) => {
+  const tier = e.target.id;
+  
+  //console.log(e.target.value);
+  
+  const data = {
+    clicks: 0,
+    price: 0,
+    _csrf: e.target.value
+  }
+  
+  if (tier == 't1') {  // tier 1
+    data.clicks = 100;
+    data.price = 4.99;
+  } else if (tier == 't2') {  // tier 2
+    data.clicks = 200;
+    data.price = 8.99;
+  } else {
+    console.log("tier not recognized");
+  }
+  
+  console.log(JSON.stringify(data));
+  
+  sendAjax('POST', '/purchaseClicks', JSON.stringify(data), redirect);
+  
+  return false;
+}
+
+//const t1Purchase = (e) => {
+//  sendAjax('POST', '/t1purchase', { clicks: 100, price: 4.99 }, redirect);
+//}
+//
+//const t2Purchase = (e) => {
+//  sendAjax('POST', '/t2purchase', { clicks: 200, price: 8.99 }, redirect);
+//}
 
 // Make the game page and retrieve the ClickModel associated with each player
 const gamePage = (res, req) => {
@@ -58,13 +89,11 @@ const gamePage = (res, req) => {
 const GameWindow = (props) => {
   const updateTotalClicks = (e) => {
     clicks++;
-    document.getElementById('totalClicks').innerHTML = clicks;
-    console.log("Update::Total_Clicks:", clicks);
   }
   
   return (  // JSX return
     <div id="gameAreaWrapper">
-      <h2 id="totalClicks" className="totalClicks">{clicks}</h2>
+      <h2 id="totalClicks" className="totalClicks">Total Clicks:{props.clicks}</h2>
       <button onClick={updateTotalClicks} id="clickForScore" className="btn btn-default">click</button>
       <input type="hidden" name="_csrf" value={props.csrf}/>
     </div>
@@ -110,6 +139,19 @@ const LeaderboardWindow = (props) => {
   );
 }
 
+const StoreWindow = (props) => {
+  return (
+    <table>
+      <tr>
+        <button id="t1" onClick={handlePurchase} value={props.csrf}>100 clicks / $4.99</button>
+      </tr>
+      <tr>
+        <button id="t2" onClick={handlePurchase} value={props.csrf}>200 clicks / $4.99</button>
+      </tr>
+    </table>
+  )
+}
+
 // - SETUP -
 const createGameWindow = (csrf) => {
   ReactDOM.render(
@@ -132,16 +174,24 @@ const createLeaderboardWindow = (csrf) => {
   );
 }
 
+const createStoreWindow = (csrf) => {
+  ReactDOM.render(
+    <StoreWindow csrf={csrf} />,
+    document.querySelector('#content')
+  );
+}
+
 const setup = (csrf) => {
   const gameButton = document.querySelector('#gameButton');
   const leaderboardButton = document.querySelector('#leaderboardButton');
   const accountButton = document.querySelector('#accountButton');
+  const storeButton = document.querySelector('#storeButton');
   
   gameButton.addEventListener('click', (e) => {
     e.preventDefault();
     createGameWindow(csrf);
     return false;
-  })
+  });
   
   leaderboardButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -153,7 +203,13 @@ const setup = (csrf) => {
     e.preventDefault();
     createAccountWindow(csrf);
     return false;
-  })
+  });
+  
+  storeButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    createStoreWindow(csrf);
+    return false;
+  });
   
   createGameWindow(csrf);
 }

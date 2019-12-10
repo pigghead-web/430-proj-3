@@ -36,16 +36,27 @@ const AccountSchema = new mongoose.Schema({
     default: Date.now, // Default value of SchemaType
   },
 
-  score: {
+  clicks: { // Number of clicks on each user
+    type: Number,
+    required: true,
+    min: 0,
+    default: 0,
+  },
+
+  autoClcikers: { // How many auto clickers does each user have
+    type: Number,
+    required: false,
+    min: 0,
+    default: 0,
+  },
+
+  funds: { // For monetization
     type: Number,
     required: true,
     min: 0,
     default: 0,
   },
 });
-
-// passport -> need to add as a 'plugin'
-// AccountSchema.plugin(passport);
 
 // - STATICS / FUNCTIONS -
 AccountSchema.statics.toAPI = (doc) => ({
@@ -86,53 +97,13 @@ AccountSchema.statics.updatePassword = (username, newPassword, salt, callback) =
   const filter = {
     username,
   };
-  // console.log("updatePassword::Supposed_Success?");
+
   return AccountModel.findOneAndUpdate(filter, { password: newPassword, salt }, callback);
 };
 
-// AccountSchema.statics.changePassword = ()
+AccountSchema.statics.addFunds = () => {
 
-/* AccountSchema.statics.changePassword = (username, password, newPassword, callback) => {
-  /**
-  const filter = doc._id;  // criteria used to look for the object we want to update
-  const update;  // what we will be updating
-  * */
-
-/* return AccountModel.findOneAndUpdate({ p: newPassword }, { new: true }, (err) => {
-    if (err) {
-      console.log('ERROR::FAILED_TO_UPDATE');
-      console.log(err);
-      return callback(err);
-    }
-
-    return callback(true);
-  });
-  AccountModel.findByUsername(username, (err, doc) => {
-    if (err) {
-      console.log("ERROR::NEW_PASSWORD_MISSING");
-      return callback(err);
-    }
-
-    if (!doc) {
-      console.log("ERROR::DOC_MISSING");
-      return callback();
-    }
-
-    return validatePassword(doc, password, (result) => {
-      if (result === true) {
-        return callback(null, doc);
-      }
-
-      return callback();
-    });
-  });
-
-  var self = this;
-
-  //crypto.randomBytes()
-  //return console.log("SUCCESS::END_OF_CHANGEPASSWORD");
-
-}; */
+};
 
 // u = username
 // p = password
