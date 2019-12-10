@@ -132,12 +132,13 @@ const changePassword = (req, res) => {
   });
 };
 
-const addFunds = (req, res) => {
-  console.log('never reached this point');
-
+const purchaseClicks = (req, res) => {
   const request = req;
   const response = res;
 
+  console.log('purchase clicks::triggered');
+
+  const username = `${request.session.account.username}`;
   const clicksToAdd = request.body.clicks; // how many auto clickers are we adding
   const { price } = request.body; // how much are we charging the user
   const totalFunds = request.session.account.funds; // the total amount of money the user has so far
@@ -148,7 +149,21 @@ const addFunds = (req, res) => {
   }
 
   // Otherwise, allow the purchase to go through
-  return Account.AccountModel.makePurchase(clicksToAdd, price, (err) => {
+  return Account.AccountModel.purchaseClicks(username, price, clicksToAdd, (err) => {
+    if (err) {
+      return response.status(400).json({ error: 'An unknown error has occurred' });
+    }
+    return response.json({ redirect: '/game' });
+  });
+};
+
+const addFunds = (req, res) => {
+  const request = req;
+  const response = res;
+
+  const username = `${request.session.account.username}`;
+
+  return Account.AccountModel.addFunds(username, 5.00, (err) => {
     if (err) {
       return response.status(400).json({ error: 'An unknown error has occurred' });
     }
@@ -174,5 +189,6 @@ module.exports.logout = logout;
 module.exports.login = login;
 module.exports.signup = signup;
 module.exports.changePassword = changePassword;
+module.exports.purchaseClicks = purchaseClicks;
 module.exports.addFunds = addFunds;
 module.exports.getToken = getToken;

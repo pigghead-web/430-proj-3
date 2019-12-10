@@ -212,6 +212,27 @@ button#clickForScore:focus {
   font-family: "Comfortaa", cursive;
 }
 
+.store-button {
+  color: #F5EFED;
+  background-color: #273043;
+  -webkit-appearance: none;
+  border: 0;
+  padding: 5px;
+  font-family: 'Comfortaa', cursive;
+  margin: auto;
+  margin-top: 22px;
+  transition: color 0.3s ease;
+  border-radius: 3px;
+}
+
+.store-button:hover {
+  cursor: pointer;
+  color: #06A77D;
+}
+
+.store-button:focus {
+  outline: none;
+}
 
 
 /***************/

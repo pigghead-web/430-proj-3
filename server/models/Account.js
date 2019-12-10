@@ -43,7 +43,7 @@ const AccountSchema = new mongoose.Schema({
     default: 0,
   },
 
-  autoClcikers: { // How many auto clickers does each user have
+  autoClikers: { // How many auto clickers does each user have
     type: Number,
     required: false,
     min: 0,
@@ -101,8 +101,25 @@ AccountSchema.statics.updatePassword = (username, newPassword, salt, callback) =
   return AccountModel.findOneAndUpdate(filter, { password: newPassword, salt }, callback);
 };
 
-AccountSchema.statics.addFunds = () => {
+AccountSchema.statics.addFunds = (username, moneyAdded, callback) => {
+  const newTotal = this.AccountSchema.funds + moneyAdded;
+  const filter = {
+    username,
+  };
 
+  return AccountModel.findOneAndUpdate(filter, { funds: newTotal }, callback);
+};
+
+AccountSchema.statics.purchaseClicks = (username, price, numOfClicks, callback) => {
+  // new total funds after a purchase
+  const NTFunds = this.AccountSchema.funds - price;
+  // new total clicks after resolving the purchase
+  const NTClicks = this.AccountSchema.clicks + numOfClicks;
+  const filter = {
+    username,
+  };
+
+  return AccountModel.findOneAndUpdate(filter, { funds: NTFunds, clicks: NTClicks }, callback);
 };
 
 // u = username
@@ -123,7 +140,6 @@ AccountSchema.statics.authenticate = (u, p, c) => AccountModel.findByUsername(u,
   // console.log("doc::present");
 
   return validatePassword(doc, p, (result) => {
-    console.log(doc.password);
     if (result === true) {
       return c(null, doc);
     }

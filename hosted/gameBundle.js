@@ -33,6 +33,7 @@ var handleReset = function handleReset(e) {
 };
 
 var handlePurchase = function handlePurchase(e) {
+  e.preventDefault();
   var tier = e.target.id; //console.log(e.target.value);
 
   var data = {
@@ -51,10 +52,17 @@ var handlePurchase = function handlePurchase(e) {
     data.price = 8.99;
   } else {
     console.log("tier not recognized");
+    return false;
   }
 
   console.log(JSON.stringify(data));
-  sendAjax('POST', '/purchaseClicks', JSON.stringify(data), redirect);
+  sendAjax('POST', '/purchaseClicks', data, redirect);
+  return false;
+};
+
+var handleFunds = function handleFunds(e) {
+  e.preventDefault();
+  sendAjax('POST', '/addFunds', null, redirect);
   return false;
 }; //const t1Purchase = (e) => {
 //  sendAjax('POST', '/t1purchase', { clicks: 100, price: 4.99 }, redirect);
@@ -169,13 +177,28 @@ var LeaderboardWindow = function LeaderboardWindow(props) {
 var StoreWindow = function StoreWindow(props) {
   return React.createElement("table", null, React.createElement("tr", null, React.createElement("button", {
     id: "t1",
+    className: "store-button",
     onClick: handlePurchase,
     value: props.csrf
   }, "100 clicks / $4.99")), React.createElement("tr", null, React.createElement("button", {
     id: "t2",
+    className: "store-button",
     onClick: handlePurchase,
     value: props.csrf
-  }, "200 clicks / $4.99")));
+  }, "200 clicks / $4.99")), React.createElement("tr", null, React.createElement("input", {
+    type: "disabled",
+    value: "credit card # here",
+    disabled: "true"
+  }), React.createElement("button", {
+    id: "addFunds",
+    className: "store-button",
+    onClick: handleFunds,
+    value: props.csrf
+  }, "Add $5.00")), React.createElement("tr", null, React.createElement("input", {
+    type: "hidden",
+    name: "_csrf",
+    value: props.csrf
+  })));
 }; // - SETUP -
 
 
@@ -255,7 +278,6 @@ var sendAjax = function sendAjax(type, action, data, success) {
     url: action,
     data: data,
     dataType: "json",
-    contentType: "application/json",
     success: success,
     error: function error(xhr, status, _error) {
       console.log(xhr.responseText);

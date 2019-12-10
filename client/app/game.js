@@ -32,6 +32,8 @@ const handleReset = (e) => {
 }
 
 const handlePurchase = (e) => {
+  e.preventDefault();
+  
   const tier = e.target.id;
   
   //console.log(e.target.value);
@@ -50,11 +52,20 @@ const handlePurchase = (e) => {
     data.price = 8.99;
   } else {
     console.log("tier not recognized");
+    return false;
   }
   
   console.log(JSON.stringify(data));
   
-  sendAjax('POST', '/purchaseClicks', JSON.stringify(data), redirect);
+  sendAjax('POST', '/purchaseClicks', data, redirect);
+  
+  return false;
+}
+
+const handleFunds = (e) => {
+  e.preventDefault();
+  
+  sendAjax('POST', '/addFunds', null, redirect);
   
   return false;
 }
@@ -143,10 +154,17 @@ const StoreWindow = (props) => {
   return (
     <table>
       <tr>
-        <button id="t1" onClick={handlePurchase} value={props.csrf}>100 clicks / $4.99</button>
+        <button id="t1" className="store-button" onClick={handlePurchase} value={props.csrf}>100 clicks / $4.99</button>
       </tr>
       <tr>
-        <button id="t2" onClick={handlePurchase} value={props.csrf}>200 clicks / $4.99</button>
+        <button id="t2" className="store-button" onClick={handlePurchase} value={props.csrf}>200 clicks / $4.99</button>
+      </tr>
+      <tr>
+        <input type="disabled" value="credit card # here" disabled="true"/>
+        <button id="addFunds" className="store-button" onClick={handleFunds} value={props.csrf}>Add $5.00</button>
+      </tr>
+      <tr>
+        <input type="hidden" name="_csrf" value={props.csrf}/>
       </tr>
     </table>
   )
