@@ -14,7 +14,7 @@
     "csurf": "^1.10.0",
     "ejsx": "^1.0.0-b2",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
+    "express-handlebars": "^5.3.1",
     "express-session": "^1.17.0",
     "favicon": "0.0.2",
     "helmet": "^3.21.2",
